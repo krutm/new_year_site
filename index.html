@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
+    <title>Письмо с падающим снегом</title>
+    <style>
+        body, html {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #eae9ec;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative; /* Это важно для позиционирования снега поверх контента */
+            font-family: 'Bad Script', cursive;
+        }
+
+        /* Центровка контейнера */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* выравнивание по верхнему краю */
+            justify-content: flex-start; /* выравнивание по левому краю */
+            height: 100vh;
+            padding: 20px;
+            /* text-align: center; */
+            position: relative; /* Контейнер остается поверх снега */
+            z-index: 3; /* Ставим контейнер поверх снега */
+        }
+
+        .gif-container {
+            width: 100%;
+            max-width: 500px;
+            height: 100px;
+            overflow: hidden;
+            margin: 0 auto;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Гифка */
+        .gif-container img {
+            width: 80%;
+            max-width: 440px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            clip-path: inset(10px 0 10px 0);
+        }
+
+        /* Текст */
+        .text {
+            /* font-size: 5px; */
+            line-height: 1.8;
+            margin: 60px auto 20px auto;
+            max-width: 800px;
+            /* text-shadow:  */
+                /* /* 1px 1px 2px black,  */
+                /* -1px -1px 2px black, */
+                /* 1px -1px 2px black,   */
+                /* -1px 1px 2px black; */
+            color: #000000;
+            text-indent: 12px;
+        }
+
+        /* Кнопка */
+        .button {
+            background: #ff7f50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: #e56e40;
+        }
+
+        /* Модальное окно */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            color: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            max-width: 90%;
+        }
+
+        .modal h2 {
+            margin: 0 0 10px 0;
+        }
+
+        .modal p {
+            margin-bottom: 20px;
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Затемнение фона */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        /* Падение снега */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: rgb(177, 175, 175);
+            font-size: 1.5em;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 333; /* Снежинки будут поверх всего */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Анимация движения снежинок */
+        .snowflake:nth-child(odd) {
+            animation-duration: 8s;
+        }
+
+        .snowflake:nth-child(even) {
+            animation-duration: 10s;
+        }
+
+        /* Адаптив */
+        @media (max-width: 768px) {
+            .text {
+                font-size: 13px;
+            }
+
+            .button {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Снег -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const body = document.body;
+            for (let i = 0; i < 100; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * window.innerWidth + 'px';
+                snowflake.style.fontSize = 8 + Math.random() * 8 + 'px';
+                snowflake.style.animationDuration = (5 + Math.random() * 5) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                body.appendChild(snowflake);
+            }
+        });
+    </script>
+
+    <div class="container">
+        <!-- Гифка -->
+        <div class="gif-container">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDBybzZ3ZnN0cWRhOWI4OHVnM2VlYW81ajJnZGE5aDVoenV4bHVvMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oQ23d92KnPkUSObWFz/giphy.gif" alt="Падающий снег">
+        </div>
+
+        <!-- Текст -->
+        <div class="text">
+            Хо-хо-хо, Полина, поздравляю тебя с наступающим Новым годом! Хочется пожелать тебе всего самого  ☃
+        </div>
+
+        <!-- Кнопка -->
+        <button class="button" onclick="requestPassword()">Нажми, когда будешь одна</button>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="overlay"></div>
+    <div class="modal" id="modal">
+        <button class="close" onclick="closeModal()">×</button>
+        <h2>Секретное сообщение</h2>
+        <p>Поздравляю! Ты нашел тайное послание!</p>
+    </div>
+
+    <!-- Скрипт -->
+    <script>
+        function requestPassword() {
+            const password = prompt('Введите пароль:');
+            if (password === '12345') {
+                openModal();
+            } else {
+                alert('Неправильный пароль!');
+            }
+        }
+
+        function openModal() {
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('#modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.querySelector('.overlay').style.display = 'none';
+            document.querySelector('#modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
